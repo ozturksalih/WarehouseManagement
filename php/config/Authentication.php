@@ -32,6 +32,18 @@ class Authentication {
         }
         return null;
     }
+    public function UpdateProfile($userToUpdate){
+        $updateQuery="UPDATE users
+        SET name = ?, surname= ?, email = ?, password_hash = ? 
+        WHERE user_id = ?;";
+        $user_id = $userToUpdate -> user_id;
+        $name = $userToUpdate -> name;
+        $surname = $userToUpdate -> surname;
+        $email = $userToUpdate -> email;
+        $passwordHash = $userToUpdate -> passwordHash;
+                
+        $this->dataAccess->DB->QueryWithArgs($updateQuery,[$name, $surname, $email, $passwordHash, $user_id]);
+    }
 
     public function IsPasswordsSame($p1, $p2) {
         if ($p1 != $p2) {

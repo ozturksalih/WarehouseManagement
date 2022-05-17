@@ -88,8 +88,8 @@ $categories = $DB->Query($categoryQuery);
                                 <ul class="dropdown-menu pull-right" role="menu" position="relative" aria-labelledby="navbarDropdown">
                                     <form action = 'editProfile.php' method = "get" >
                                     <li>
-                                        <input class="dropdown-item" type="hidden" name ="profile-email" value ="<?php echo $user->email?>"/>
-                                        <button class="dropdown-item" type='submit' name='edit-profile'>Edit</button>
+                                        
+                                        <button class="dropdown-item" type='submit' >Edit</button>
                                     </li>
                                     </form>
                                     <li><hr class="dropdown-divider"></li>

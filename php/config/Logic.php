@@ -28,6 +28,8 @@ class Logic {
                 return;
             }
             $this->auth->Register(filter_input(INPUT_GET, "name"), filter_input(INPUT_GET, "surname"), filter_input(INPUT_GET, "email"), filter_input(INPUT_GET, "pass"));
+        }else if (filter_has_var(INPUT_GET, "update-profile")) {
+            $this->EditProfile(filter_input(INPUT_GET, "user-id"), filter_input(INPUT_GET, "name"),filter_input(INPUT_GET, "surname"),filter_input(INPUT_GET, "email"),filter_input(INPUT_GET, "profile-email"));
         }
         if(filter_has_var(INPUT_GET, "profile-email")){
             //echo "sistem geliyor". filter_input(INPUT_GET, 'profile-email');
@@ -39,6 +41,13 @@ class Logic {
         if(filter_has_var(INPUT_GET, "logout")){
             $this->auth->LogOut();
         }
+    }
+    private function EditProfile($user_id, $name, $surname, $email){
+        $currentUserInformations = [$_SESSION['user']][0];
+        
+        $userToUpdate = new User($user_id, $name, $surname, $email,$currentUserInformations->passwordHash);
+        $this->auth->UpdateProfile($userToUpdate);
+        $_SESSION['user'] = $userToUpdate;
     }
     public function Pop_Up($text) {
         $output = $text;
