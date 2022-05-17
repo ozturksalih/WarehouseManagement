@@ -1,5 +1,5 @@
 <?php
-require_once 'user.php';
+require_once  './php/entities/user.php';
 
 require_once 'config.php';
 require_once 'dataAccess.php';
