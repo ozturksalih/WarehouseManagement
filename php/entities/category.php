@@ -12,7 +12,6 @@ class Category {
     }
         
     
-    
     public function getCategoryId(): int
     {
         return $this->category_id;

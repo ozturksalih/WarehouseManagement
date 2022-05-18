@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/WarehouseManagement/index.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/entities/user.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/editPages/productEdit.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/config/Logic.php</file>
             <file>file:/C:/xampp/htdocs/WarehouseManagement/warehouse_tables.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/config/Authentication.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/entities/category.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/entities/product.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/config/config.php</file>
         </group>
     </open-files>
 </project-private>
