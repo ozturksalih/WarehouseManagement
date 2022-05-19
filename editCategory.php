@@ -1,8 +1,11 @@
 <?php
-require_once './php/config/config.php';
-require_once './php/config/Logic.php';
+require_once  './php/config/config.php';
+require_once  './php/config/Logic.php';
 $logic = new Logic();
 $user = [$_SESSION['user']][0];
+$category = [$_SESSION['categoryToUpdate']][0][0];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +16,7 @@ $user = [$_SESSION['user']][0];
         <link rel ="stylesheet" href ="css/bootstrap.min.css"/>
         <script src="js/bootstrap.bundle.min.js"></script>
 
-        <title>Add Category</title>
+        <title>Edit Product</title>
     </head>
     <body>
         <div class="container">
@@ -28,6 +31,12 @@ $user = [$_SESSION['user']][0];
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+
+
+
+
 
                         </ul>
                         <div class="d-flex">
@@ -63,10 +72,14 @@ $user = [$_SESSION['user']][0];
                 <form action="warehouse_tables.php" method="get">
                     <div class="form-group">
                         <label >Category Name</label>
-                        <input type="text" class="form-control" name ='category_name'  placeholder="Electronics">
+                        <input type="text" class="form-control" name ='category_name'  value="<?php echo $category['category_name'] ?>">
 
-                    </div>                    
-                    <button type="submit" name='added-category' class="btn btn-primary">Add Category</button>
+                    </div>
+
+                    
+
+                    <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>" />
+                    <button type="submit" name='edited-category' class="btn btn-primary">Update Category</button>
                 </form>
             </div>
 

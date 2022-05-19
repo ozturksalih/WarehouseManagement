@@ -1,6 +1,9 @@
 <?php
 require_once 'Connection.php';
 require_once 'DB.php';
+require_once  './php/entities/user.php';
+require_once  './php/entities/category.php';
+require_once  './php/entities/product.php';
 session_start();
 
 define("DB_HOST","127.0.0.1");

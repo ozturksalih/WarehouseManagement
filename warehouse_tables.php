@@ -2,33 +2,15 @@
 require_once './php/config/Logic.php';
 
 $Logic = new Logic();
-$queryString = "SELECT 
-    product_id, category_id, product_name, quantity 
-
-    FROM products
-    ORDER BY product_name ASC
-            
-    ";
-print_r($_SESSION);
-
-$categoryQuery = "SELECT 
-    category_id, category_name 
-
-    FROM categories
-    ORDER BY category_name ASC
-            
-    ";
 
 if (!$_SESSION["isLogged"] || !$_SESSION["user"]) {
     echo "<script> alert('Please Login') </script>";
     sleep(2);
     header("Location: http://localhost/WarehouseManagement/index.php");
-    
 }
 $user = $_SESSION["user"];
-
-$products = $DB->Query($queryString);
-$categories = $DB->Query($categoryQuery);
+$products= $Logic->getAllProducts();
+$categories = $Logic ->getAllCategories();
 
 ?>
 <!DOCTYPE html>
@@ -40,7 +22,7 @@ $categories = $DB->Query($categoryQuery);
         <link rel ="stylesheet" href ="css/bootstrap.min.css"/>
         <script src="js/bootstrap.bundle.min.js"></script>
 
-        <title>Document</title>
+        <title>Warehouse Table</title>
     </head>
     <body>
 
@@ -54,32 +36,33 @@ $categories = $DB->Query($categoryQuery);
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <!-- 
-                           
-                           
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-
-
-                            <li class="nav-item">
-                                <a class="nav-link disabled">Disabled</a>
-                            </li>
-                        
-                        
-                        -->
+                            <!-- 
+                               
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Link</a>
+                                </li>
+    
+    
+                                <li class="nav-item">
+                                    <a class="nav-link disabled">Disabled</a>
+                                </li>
+                            
+                            
+                            -->
                         </ul>
                         <div class="d-flex">
 
-                            
-                            <a href="addProduct.php"> 
-                            <button class="btn btn-sm btn-outline-success me-2"  type="button">Add Product</button>
-                            </a>
+                            <form action="addProduct.php" method="get">
+                                <a href="addProduct.php"> 
+                                    <button type="submit" name='add-product' class="btn btn-sm btn-outline-success me-2"  type="button">Add Product</button>
+                                </a>
+                            </form>
                             <a href="addCategory.php"> 
-                            <button class="btn btn-sm btn-outline-success me-2"  type="button">Add Category</button>
+                                <button class="btn btn-sm btn-outline-success me-2"  type="button">Add Category</button>
                             </a>
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,10 +70,10 @@ $categories = $DB->Query($categoryQuery);
                                 </a>
                                 <ul class="dropdown-menu pull-right" role="menu" position="relative" aria-labelledby="navbarDropdown">
                                     <form action = 'editProfile.php' method = "get" >
-                                    <li>
-                                        <input class="dropdown-item" type="hidden" name ="profile-email" value ="<?php echo $user->email?>"/>
-                                        <button class="dropdown-item" type='submit' name='edit-profile'>Edit</button>
-                                    </li>
+                                        <li>
+
+                                            <button class="dropdown-item" type='submit' >Edit</button>
+                                        </li>
                                     </form>
                                     <li><hr class="dropdown-divider"></li>
                                     <form method="get"><li><input class="dropdown-item" type ="submit" name = "logout" value="Log out"/></li></form>
@@ -128,11 +111,19 @@ $categories = $DB->Query($categoryQuery);
                                         }
                                         ?></td>
                                     <td><?php echo $item["quantity"]; ?></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-warning" type="button">Edit</button>
+                                    <td>  
+
+                                        <form action="editProduct.php" method="get">
+                                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>" />
+                                            <button type="submit" class="btn btn-sm btn-outline-warning" name="edit-product">Edit</button>
+                                        </form>
+
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-danger" type="button">Delete</button>
+                                        <form action="warehouse_tables.php" method="get">
+                                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" name="delete-product">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
 
@@ -143,7 +134,7 @@ $categories = $DB->Query($categoryQuery);
                     </table>
 
                 </div>
-
+                <div class="col-sm-2"></div>
 
                 <div class="col-sm-4">
                     <table class="table table-hover">
@@ -164,10 +155,17 @@ $categories = $DB->Query($categoryQuery);
                                     <th scope="row"><?php echo $item["category_id"]; ?></th>
                                     <td><?php echo $item["category_name"]; ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-warning" type="button">Edit</button>
+                                        <form action="editCategory.php" method="get">
+                                            <input type="hidden" name="category_id" value="<?php echo $item['category_id']; ?>" />
+                                            <button type="submit" class="btn btn-sm btn-outline-warning" name="edit-category">Edit</button>
+                                        </form>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-danger" type="button">Delete</button>
+                                        <form action="warehouse_tables.php" method="get">
+                                            <input type="hidden" name="category_id" value="<?php echo $item['category_id']; ?>" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" name="delete-category">Delete</button>
+                                        </form>
+                                       
                                     </td>
                                 </tr>
 

@@ -1,8 +1,11 @@
 <?php
-require_once './php/config/config.php';
-require_once './php/config/Logic.php';
+require_once  './php/config/config.php';
+require_once  './php/config/Logic.php';
 $logic = new Logic();
 $user = [$_SESSION['user']][0];
+$product = $_SESSION['product'][0];
+$categories = [$_SESSION['categories']][0];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +16,7 @@ $user = [$_SESSION['user']][0];
         <link rel ="stylesheet" href ="css/bootstrap.min.css"/>
         <script src="js/bootstrap.bundle.min.js"></script>
 
-        <title>Add Category</title>
+        <title>Edit Product</title>
     </head>
     <body>
         <div class="container">
@@ -28,6 +31,12 @@ $user = [$_SESSION['user']][0];
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+
+
+
+
 
                         </ul>
                         <div class="d-flex">
@@ -62,11 +71,36 @@ $user = [$_SESSION['user']][0];
             <div class = "col-6">
                 <form action="warehouse_tables.php" method="get">
                     <div class="form-group">
-                        <label >Category Name</label>
-                        <input type="text" class="form-control" name ='category_name'  placeholder="Electronics">
+                        <label >Product Name</label>
+                        <input type="text" class="form-control" name ='product_name'  value="<?php echo $product['product_name'] ?>">
 
-                    </div>                    
-                    <button type="submit" name='added-category' class="btn btn-primary">Add Category</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categorySelect">Choose Category</label>
+                        <select name="category_id" class="form-control" id="categorySelect">
+                            <?php
+                            foreach ($categories as $category) {
+                                echo "<option ";
+                                if($category['category_id'] == $product['category_id']){
+                                     echo "selected ";
+                                }
+                                echo " value=".$category['category_id'].">" .$category['category_name'] ."</option>";
+                                
+                            }
+                            ?>
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Quantity</label>
+                        <input type="number" class="form-control" name='quantity' value ="<?php echo $product["quantity"]?>">
+                        
+
+                    </div>
+
+                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
+                    <button type="submit" name='edited-product' class="btn btn-primary">Update Product</button>
                 </form>
             </div>
 
