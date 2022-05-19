@@ -2,22 +2,6 @@
 require_once './php/config/Logic.php';
 
 $Logic = new Logic();
-$queryString = "SELECT 
-    product_id, category_id, product_name, quantity 
-
-    FROM products
-    ORDER BY product_name ASC
-            
-    ";
-print_r($_SESSION);
-
-$categoryQuery = "SELECT 
-    category_id, category_name 
-
-    FROM categories
-    ORDER BY category_name ASC
-            
-    ";
 
 if (!$_SESSION["isLogged"] || !$_SESSION["user"]) {
     echo "<script> alert('Please Login') </script>";
@@ -25,9 +9,9 @@ if (!$_SESSION["isLogged"] || !$_SESSION["user"]) {
     header("Location: http://localhost/WarehouseManagement/index.php");
 }
 $user = $_SESSION["user"];
+$products= $Logic->getAllProducts();
+$categories = $Logic ->getAllCategories();
 
-$products = $DB->Query($queryString);
-$categories = $DB->Query($categoryQuery);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +22,7 @@ $categories = $DB->Query($categoryQuery);
         <link rel ="stylesheet" href ="css/bootstrap.min.css"/>
         <script src="js/bootstrap.bundle.min.js"></script>
 
-        <title>Document</title>
+        <title>Warehouse Table</title>
     </head>
     <body>
 
@@ -150,7 +134,7 @@ $categories = $DB->Query($categoryQuery);
                     </table>
 
                 </div>
-
+                <div class="col-sm-2"></div>
 
                 <div class="col-sm-4">
                     <table class="table table-hover">

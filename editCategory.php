@@ -4,7 +4,7 @@ require_once  './php/config/Logic.php';
 $logic = new Logic();
 $user = [$_SESSION['user']][0];
 $category = [$_SESSION['categoryToUpdate']][0][0];
-print_r($category);
+
 
 ?>
 <!DOCTYPE html>

@@ -3,7 +3,7 @@ require_once './php/config/Logic.php';
 
 $logic = new Logic();
 $user = [$_SESSION['user']][0];
-print_r($user);
+
 
 //$user = $_SESSION["user"];
 //print_r($user);

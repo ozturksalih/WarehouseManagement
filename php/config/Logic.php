@@ -125,7 +125,7 @@ class Logic {
     private function EditProfile($user_id, $name, $surname, $email) {
         $currentUserInformations = [$_SESSION['user']][0];
 
-        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash);
+        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash,0);
         $this->auth->UpdateProfile($userToUpdate);
         $_SESSION['user'] = $userToUpdate;
     }
@@ -137,6 +137,12 @@ class Logic {
         }
 
         echo "<script> alert('" . $output . "') </script>";
+    }
+    public function getAllProducts(){
+        return $this->productDal->GetAllProducts();
+    }
+    public function getAllCategories(){
+        return $this->categoryDal->GetAllCategories();
     }
 
     public function getByEmail($email) {

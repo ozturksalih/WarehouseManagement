@@ -4,7 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/WarehouseManagement/php/entities/user.php</file>
-            <file>file:/C:/xampp/htdocs/WarehouseManagement/editPages/productEdit.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/DataAccessLayer/ProductDal.php</file>
+            <file>file:/C:/xampp/htdocs/WarehouseManagement/php/DataAccessLayer/UserDal.php</file>
             <file>file:/C:/xampp/htdocs/WarehouseManagement/php/config/Logic.php</file>
             <file>file:/C:/xampp/htdocs/WarehouseManagement/warehouse_tables.php</file>
             <file>file:/C:/xampp/htdocs/WarehouseManagement/php/config/Authentication.php</file>

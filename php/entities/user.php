@@ -6,14 +6,16 @@ class User {
     public string $surname;
     public string $email;
     public string $passwordHash;
+    public int $wrongAttempt;
     
-    public function __construct($user_id, ?string $name,?string $surname,?string $email,?string $passwordHash)
+    public function __construct($user_id, ?string $name,?string $surname,?string $email,?string $passwordHash, ?int $wrongAttempt)
     {
         $this->user_id = $user_id;
         $this->name = $name;
         $this->surname = $surname;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
+        $this->wrongAttempt = $wrongAttempt;
     }
         
     
@@ -54,6 +56,15 @@ class User {
     public function setPasswordHash(string $passwordHash): void
     {
         $this->passwordHash = $passwordHash;
+    }
+    
+    public function getWrongAttempt(): int
+    {
+        return $this->wrongAttempt;
+    }
+    public function setWrongAttempt(int $wrongAttempt): void
+    {
+        $this->wrongAttempt = $wrongAttempt;
     }
     
     

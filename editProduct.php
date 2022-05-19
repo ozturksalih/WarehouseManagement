@@ -5,7 +5,7 @@ $logic = new Logic();
 $user = [$_SESSION['user']][0];
 $product = $_SESSION['product'][0];
 $categories = [$_SESSION['categories']][0];
-print_r($product);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
