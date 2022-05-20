@@ -6,6 +6,7 @@ $Logic = new Logic();
 if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
     header("Location: http://localhost/WarehouseManagement/index.php");
 }
+print_r($_SESSION);
 $user = $_SESSION["user"];
 $products= $Logic->getAllProducts();
 $categories = $Logic ->getAllCategories();

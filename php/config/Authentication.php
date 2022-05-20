@@ -27,7 +27,6 @@ class Authentication {
                 //print_r($_SESSION["user"]);
                 return true;
             }
-            
         } else {
             $this->popup->CreatePopUp("Error", "User doesn't exist!");
         }
@@ -35,53 +34,53 @@ class Authentication {
         $this->LogOut();
         return false;
     }
-    
+
     private function CheckLoginCredentials($email, $password) {
         $user = $this->getUser($email);
 
         $passwordCheck = $this->PasswordCheck($email, $password);
         $wrongAttempt = $this->WrongAttemptCheck($user->user_id);
-        $lastWrongDate = $this->GetLastWrongAttempt($user ->user_id);
+        $lastWrongDate = $this->GetLastWrongAttempt($user->user_id);
         $checkLastWrong = $this->CompareLastWrongAttempt($lastWrongDate);
         if (!$wrongAttempt) {
-            
+
             $this->SetLastWrongAttempt($user->user_id);
-            
+
             $this->userDal->ResetWrongAttempt($user->user_id);
-            
-            
+
             return false;
-            
         }
-        if(!$checkLastWrong){
+        if (!$checkLastWrong) {
             $this->popup->CreatePopUp("Error", "You need for 30 seconds to log in!");
             return false;
         }
-        
+
         if (!$passwordCheck) {
             $this->popup->CreatePopUp("Error", "Wrong Password");
             return false;
-        } 
+        }
         return true;
     }
-    private function CompareLastWrongAttempt($date){
+
+    private function CompareLastWrongAttempt($date) {
         $seconds = 30;
         $date = date("Y-m-d H:i:s", (strtotime(date($date)) + $seconds));
         $date_now = date("Y-m-d H:i:s");
-        if($date_now > $date){
+        if ($date_now > $date) {
             return true;
         }return false;
     }
-    private function GetLastWrongAttempt($user_id){
+
+    private function GetLastWrongAttempt($user_id) {
         $user = $this->getUserById($user_id);
         return $lastWrongDate = $user->last_wrong_attempt;
     }
-    private function SetLastWrongAttempt($user_id){
-        
+
+    private function SetLastWrongAttempt($user_id) {
+
         $this->userDal->SetLastWrongAttempt($user_id);
-        
     }
-    
+
     private function WrongAttemptCheck($user_id) {
         $wrongAttempt = $this->userDal->GetWrongAttempt($user_id);
         print_r($wrongAttempt);
@@ -106,7 +105,18 @@ class Authentication {
         return password_verify($password, $hashFromDB);
     }
 
-    
+    public function CheckPasswordComplexity($password) {
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number = preg_match('@[0-9]@', $password);
+        $specialChars = preg_match('@[^\w]@', $password);
+
+        if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+            return false;
+            //echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
+        }
+        return true;
+    }
 
     public function IsUserExist($email): bool {
 
@@ -151,6 +161,11 @@ class Authentication {
         $isUserExist = $this->IsUserExist($email);
         if ($isUserExist) {
             $this->popup->CreatePopUp("Warning", "This Email is already registered!");
+            return false;
+        }
+        if(!$this->CheckPasswordComplexity($password)){
+            $this->popup->CreatePopUp("Warning", "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.");
+        
             return false;
         }
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
