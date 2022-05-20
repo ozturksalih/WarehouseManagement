@@ -132,7 +132,7 @@ class Logic {
     private function EditProfile($user_id, $name, $surname, $email) {
         $currentUserInformations = [$_SESSION['user']][0];
 
-        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash,0);
+        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash,0,date("Y-m-d H:i:s"));
         $this->auth->UpdateProfile($userToUpdate);
         $_SESSION['user'] = $userToUpdate;
     }
