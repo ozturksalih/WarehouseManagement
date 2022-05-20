@@ -3,9 +3,7 @@ require_once './php/config/Logic.php';
 
 $Logic = new Logic();
 
-if (!$_SESSION["isLogged"] || !$_SESSION["user"]) {
-    echo "<script> alert('Please Login') </script>";
-    sleep(2);
+if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
     header("Location: http://localhost/WarehouseManagement/index.php");
 }
 $user = $_SESSION["user"];
@@ -25,7 +23,7 @@ $categories = $Logic ->getAllCategories();
         <title>Warehouse Table</title>
     </head>
     <body>
-
+        
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">

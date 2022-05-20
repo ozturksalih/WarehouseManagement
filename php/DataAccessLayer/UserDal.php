@@ -12,7 +12,7 @@ class UserDal {
 
     public function GetAllUsers() {
         $gelAllQuery = "SELECT 
-    user_id, name, surname, email, password_hash, wrong_attempt 
+    user_id, name, surname, email, password_hash, wrong_attempt , last_wrong_attempt
 
     FROM users
     
@@ -21,28 +21,36 @@ class UserDal {
         $allUsers = $this->dataAccess->DB->Query($gelAllQuery);
         return $allUsers;
     }
-    public function GetByUserId($id){
+    public function GetByUserId($id) : User{
         $getQuery = "SELECT 
-    user_id, name, surname, email, password_hash, wrong_attempt 
+    user_id, name, surname, email, password_hash, wrong_attempt , last_wrong_attempt
 
     FROM users
     WHERE user_id = ?
             
     ";
-        $user = $this->dataAccess->DB->QueryWithArgs($getQuery,[$id]);
+        $db = $this->dataAccess->DB->QueryWithArgs($getQuery,[$id]);
+        
+        $user = new User($db[0]["user_id"], $db[0]["name"], $db[0]["surname"], $db[0]["email"], $db[0]["password_hash"], $db[0]["wrong_attempt"]
+                ,$db[0]["last_wrong_attempt"]);
         return $user;
     }
-    public function GetByEmail($email) : User{
+    public function GetByEmail($email) {
         $getQuery = "SELECT 
-    user_id, name, surname, email, password_hash, wrong_attempt 
+    user_id, name, surname, email, password_hash, wrong_attempt, last_wrong_attempt
 
     FROM users
     WHERE email = ?
             
     ";
         $db = $this->dataAccess->DB->QueryWithArgs($getQuery,[$email]);
-        $user = new User($db[0]["user_id"], $db[0]["name"], $db[0]["surname"], $db[0]["email"], $db[0]["password_hash"], $db[0]["wrong_attempt"]);
-        return $user;
+        
+        if($db != null){
+            $user = new User($db[0]["user_id"], $db[0]["name"], $db[0]["surname"], $db[0]["email"], $db[0]["password_hash"], $db[0]["wrong_attempt"],
+                    $db[0]["last_wrong_attempt"]);
+            return $user;
+        }
+        return null;
     }
 
     public function AddUser($userToAdd) {
@@ -56,6 +64,7 @@ class UserDal {
     
         return true;
     }
+    
 
     public function DeleteUser($id) {
         $deleteQuery = "DELETE FROM users WHERE user_id=?;";
@@ -66,8 +75,9 @@ class UserDal {
     }
     public function IncreaseWrongAttempt($id){
         $user = $this->GetByUserId($id);
+        
         $wrongAttempt = $user->wrongAttempt;
-        $wrongAttempt++;
+        $wrongAttempt+=1;
         
         $updateQuery="UPDATE users
         SET wrong_attempt= ?
@@ -77,6 +87,18 @@ class UserDal {
         
         
     }
+    public function SetLastWrongAttempt($user_id){
+        $user = $this->GetByUserId($user_id);
+        
+        $now = date("Y-m-d H:i:s");
+        
+        $setquery = "UPDATE users
+        SET last_wrong_attempt= ?
+        WHERE user_id = ?;";
+        $this->dataAccess->DB->QueryWithArgs($setquery, [$now, $user_id]);
+        return true;
+    }
+    
     public function GetWrongAttempt($user_id){
         $getQuery = "SELECT 
     wrong_attempt 
@@ -85,7 +107,8 @@ class UserDal {
     WHERE user_id = ?
             
     ";
-        return $this->dataAccess->DB->QueryWithArgs($getQuery,[$user_id]);
+        $db = $this->dataAccess->DB->QueryWithArgs($getQuery,[$user_id]);
+        return $db[0]["wrong_attempt"];
     }
     public function ResetWrongAttempt($user_id){
         $updateQuery= "UPDATE users
