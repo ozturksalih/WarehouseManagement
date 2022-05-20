@@ -3,6 +3,7 @@ require_once './php/config/Logic.php';
 require_once './php/config/config.php';
 
 $Logic = new Logic();
+
 //print_r($_SESSION);
 //echo "<script> alert('Please Login') </script>";
 ?>

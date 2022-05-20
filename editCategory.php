@@ -2,6 +2,9 @@
 require_once  './php/config/config.php';
 require_once  './php/config/Logic.php';
 $logic = new Logic();
+if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
+    header("Location: http://localhost/WarehouseManagement/index.php");
+}
 $user = [$_SESSION['user']][0];
 $category = [$_SESSION['categoryToUpdate']][0][0];
 

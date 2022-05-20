@@ -3,6 +3,9 @@ require_once './php/config/config.php';
 require_once './php/config/Logic.php';
 $logic = new Logic();
 $user = [$_SESSION['user']][0];
+if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
+    header("Location: http://localhost/WarehouseManagement/index.php");
+}
 $categories = [$_SESSION['categories']][0];
 ?>
 <!DOCTYPE html>
