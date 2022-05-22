@@ -6,7 +6,7 @@ $Logic = new Logic();
 if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
     header("Location: http://localhost/WarehouseManagement/index.php");
 }
-print_r($_SESSION);
+//print_r($_SESSION);
 $user = $_SESSION["user"];
 $products= $Logic->getAllProducts();
 $categories = $Logic ->getAllCategories();
@@ -28,7 +28,7 @@ $categories = $Logic ->getAllCategories();
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Warehouse Management</a>
+                    <a class="navbar-brand" href="http://localhost/WarehouseManagement/warehouse_tables.php">Warehouse Management</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

@@ -83,7 +83,7 @@ class Authentication {
 
     private function WrongAttemptCheck($user_id) {
         $wrongAttempt = $this->userDal->GetWrongAttempt($user_id);
-        print_r($wrongAttempt);
+        //print_r($wrongAttempt);
         if ($wrongAttempt >= 3) {
             return false;
         }return true;
