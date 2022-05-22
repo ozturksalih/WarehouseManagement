@@ -2,6 +2,9 @@
 require_once  './php/config/config.php';
 require_once  './php/config/Logic.php';
 $logic = new Logic();
+if (!isset($_SESSION["isLogged"]) || !$_SESSION["isLogged"] || !$_SESSION["user"]) {
+    header("Location: http://localhost/WarehouseManagement/index.php");
+}
 $user = [$_SESSION['user']][0];
 $product = $_SESSION['product'][0];
 $categories = [$_SESSION['categories']][0];
@@ -24,7 +27,7 @@ $categories = [$_SESSION['categories']][0];
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Warehouse Management</a>
+                    <a class="navbar-brand" href="http://localhost/WarehouseManagement/warehouse_tables.php">Warehouse Management</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

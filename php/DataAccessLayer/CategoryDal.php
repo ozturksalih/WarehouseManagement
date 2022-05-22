@@ -45,7 +45,9 @@ VALUES (?);";
     }
 
     public function DeleteCategory($id) {
-        $deleteQuery = "DELETE FROM categories WHERE category_id=?;";
+        $deleteQuery = "SET FOREIGN_KEY_CHECKS=0;
+DELETE FROM `categories` WHERE `category_id` = ? LIMIT 1;
+SET FOREIGN_KEY_CHECKS=1;";
         
         $this->dataAccess->DB->QueryWithArgs($deleteQuery,[$id]);
        

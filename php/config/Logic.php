@@ -21,7 +21,7 @@ class Logic {
 
         if (isset($_POST["login"])) {
             //$this->EditRow(filter_input(INPUT_GET, "edit-id"));
-            $this->auth->Login($_POST["email"], $_POST["pass"]);
+            $this->Login($_POST["email"], $_POST["pass"]);
         } else if (filter_has_var(INPUT_GET, "register")) {
             if (!$this->auth->IsPasswordsSame(filter_input(INPUT_GET, "pass"), filter_input(INPUT_GET, "passConfirm"))) {
                 $this->auth->Pop_Up("passwords are not same!");
@@ -74,6 +74,13 @@ class Logic {
             $this->auth->LogOut();
         }
     }
+    private function Login($email, $password){
+        $login = $this->auth->Login($email, $password);
+        if($login){
+            header("Location: http://localhost/WarehouseManagement/warehouse_tables.php");
+        }
+        
+    }
     private function DeleteCategory($category_id){
         $this->categoryDal->DeleteCategory($category_id);
         
@@ -125,7 +132,7 @@ class Logic {
     private function EditProfile($user_id, $name, $surname, $email) {
         $currentUserInformations = [$_SESSION['user']][0];
 
-        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash,0);
+        $userToUpdate = new User($user_id, $name, $surname, $email, $currentUserInformations->passwordHash,0,date("Y-m-d H:i:s"));
         $this->auth->UpdateProfile($userToUpdate);
         $_SESSION['user'] = $userToUpdate;
     }
